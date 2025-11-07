@@ -1,13 +1,47 @@
-<!doctype html>
-<html lang ="fr">
-<head>
-<link rel="stylesheet" href="styles.css">
-<meta charset="utf-8">
-<title> mon joli site </title>
-</head>
-<body> 
-<h1>Mon joli titre</h1>
-<p>Mon <strong>joli<em> paragraphe</em></strong>.</p>
-<a href="deuxiemepage2025.html">lien seconde page</a>
-</body>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>TWD Stream</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <script>
+      // Récupère le paramètre URL ou hash
+      const params = new URLSearchParams(location.search);
+      let page = (params.get('page') || location.hash.replace('#','') || 'accueil').toLowerCase();
+
+      // Map page -> contenu HTML
+      const pages = {
+        accueil: `
+          <div class="panel active" id="accueil">
+            <h1>Accueil</h1>
+            <p>Bienvenue sur TWD Stream !</p>
+            <a href="?page=watch">Regarder</a> |
+            <a href="?page=description">Description</a>
+          </div>
+        `,
+        watch: `
+          <div class="panel active" id="watch">
+            <h1>Watch</h1>
+            <video controls poster="poster.jpg">
+              <!-- <source src="videos/s1e1.mp4" type="video/mp4"> -->
+              Votre navigateur ne supporte pas la vidéo.
+            </video>
+            <p>Episode info...</p>
+            <a href="?page=accueil">Retour accueil</a>
+          </div>
+        `,
+        description: `
+          <div class="panel active" id="description">
+            <h1>Description</h1>
+            <p>Synopsis, personnages, saisons...</p>
+            <a href="?page=accueil">Retour accueil</a>
+          </div>
+        `
+      };
+
+      // Injecte la page correcte
+      document.body.innerHTML = pages[page] || pages['accueil'];
+    </script>
+  </body>
 </html>
